@@ -10,7 +10,31 @@ public class BasicAttack : Action
 
     public override void Execute()
     {
+        
+        //unit.movement.FaceTarget();
+        //unit.movement.MoveToTarget_Melee();
+        BasicAttackTarget();
+        
     }
+
+    
+    
+    void BasicAttackTarget()
+    {
+        int totalDamage = 0;
+
+        totalDamage += unit.strength + unit.weapon.damage;
+
+        //play unit attack anim
+        //Wait 0.5 seconds
+        //player target damaged anim
+        //Calculate random miss chance
+
+        unit.target.health -= totalDamage;
+        //
+        
+    }
+    
 
 
 #region Test Methods

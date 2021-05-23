@@ -6,7 +6,7 @@ public class PlayerUnit : Unit
 {
     public Action plannedAction;
 
-    public void SetPlannedAction()
+    public void SetPlannedAction(Action _plannedAction)
     {
 
     }

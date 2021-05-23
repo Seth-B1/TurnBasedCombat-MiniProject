@@ -13,17 +13,16 @@ public class BattleHandler : MonoBehaviour
 #endregion    
     private void Start() 
     {
-        enemyTeam = new List<Unit>();  
-        playerTeam = new List<Unit>();
-        //playerActionQueue = new List<PlayerUnit>();
+
+
     }
 
 #region Player Turn Functionality
     public void ExecutePlayerActionQueue()
     {
-        foreach (PlayerUnit unit in playerActionQueue)
+        foreach (PlayerUnit playerUnit in playerActionQueue)
         {
-            unit.plannedAction.Execute();
+            playerUnit.plannedAction.Execute();
         }
     }
     public void NextPlayerAction()
