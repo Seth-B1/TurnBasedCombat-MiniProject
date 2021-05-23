@@ -1,3 +1,16 @@
 {
-	"name": "CombatGrounds"
+    "name": "CombatGrounds",
+    "rootNamespace": "",
+    "references": [
+        "GUID:4b5a4ca67886fad4586bd709535d28de"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
