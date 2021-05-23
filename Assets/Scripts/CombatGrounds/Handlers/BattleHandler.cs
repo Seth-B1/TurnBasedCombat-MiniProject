@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
+using System;
 public class BattleHandler : MonoBehaviour
 {
 #region Fields and Properties
@@ -15,34 +16,49 @@ public class BattleHandler : MonoBehaviour
 #endregion    
     private void Start() 
     {
-        inputHandler = new InputHandler();
+        inputHandler = GetComponent<InputHandler>();
+        inputHandler.onCurrentUnitActionHasBeenChosen += AddPlannedActionToPlayerUnit;
+        BeginPlayerTurn();
     }
 
 #region Player Turn Functionality
     void BeginPlayerTurn()
     {
+        //CheckIfAllPlayersDead()
+        StartCoroutine(WaitUntilPlayerUnitActionInputAdded());
+        
+
+    }
+    IEnumerator WaitUntilPlayerUnitActionInputAdded()
+    {
+        Debug.Log("WaitUntilPlayerUnitActionInputAdded");
         foreach (Unit playerUnit in playerTeam)
         {
             if (!playerUnit.isDead)
             {
-                currentPlayerUnit = (PlayerUnit)playerUnit;
-                StartCoroutine(WaitForPlayerUnitActionInput());
+                ChangeCurrentPlayerUnit(playerUnit);
+                while (currentPlayerUnit.plannedAction == null)
+                {
+                    yield return null;
+                }
+                playerActionQueue.Add(currentPlayerUnit);
                 continue;
             }
             continue;
         }
-    }
-    IEnumerator WaitForPlayerUnitActionInput()
-    {
-        while (currentPlayerUnit.plannedAction == null)
-        {
-            yield return null;
-        }
-        playerActionQueue.Add(currentPlayerUnit);
+        ExecutePlayerActionQueue();
     }
 
+
+
+    public void AddPlannedActionToPlayerUnit(object sender, System.EventArgs e)
+    {
+        currentPlayerUnit.plannedAction = new BasicAttack(currentPlayerUnit);
+    }
     public void ExecutePlayerActionQueue()
     {
+        Debug.Log("All Units added an action, executing now");
+        //OrganizeWhoExecutesFirstBySpeed();
         foreach (PlayerUnit playerUnit in playerActionQueue)
         {
             playerUnit.plannedAction.Execute();
@@ -53,5 +69,13 @@ public class BattleHandler : MonoBehaviour
         
     }
 #endregion
-    
+
+
+#region Explanitory Variables (Player Turn)
+    private void ChangeCurrentPlayerUnit(Unit playerUnit)
+    {
+        currentPlayerUnit = (PlayerUnit)playerUnit;
+        inputHandler.currentPlayerUnit = currentPlayerUnit;
+    }
+#endregion
 }

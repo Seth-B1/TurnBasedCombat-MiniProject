@@ -32,6 +32,7 @@ public class BasicAttack : Action
 
         unit.target.health -= totalDamage;
         //
+        Debug.Log(unit.unitName + " attacks for damage: " + totalDamage);
         
     }
     
