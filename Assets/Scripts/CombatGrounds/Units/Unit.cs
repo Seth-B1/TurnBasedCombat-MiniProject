@@ -10,6 +10,7 @@ public abstract class Unit : MonoBehaviour
     public int health;
     public int strength;
     public int speed;
+    public bool isDead;
     
 
     public void BasicAttack()
