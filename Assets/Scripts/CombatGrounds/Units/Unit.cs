@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
+    public string unitName;
     public int health;
     public int strength;
     public int speed;

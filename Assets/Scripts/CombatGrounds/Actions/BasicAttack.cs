@@ -10,7 +10,13 @@ public class BasicAttack : Action
 
     public override void Execute()
     {
-        Debug.Log($"{unit.gameObject.name} executes basic attack");
     }
 
+
+#region Test Methods
+    public override void TestExecute()
+    {
+        Debug.Log($"{unit.unitName} executes basic attack");
+    }
+#endregion
 }

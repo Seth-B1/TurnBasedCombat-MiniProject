@@ -6,7 +6,8 @@ public class PlayerUnit : Unit
 {
     public Action plannedAction;
 
-    private void Awake() {
-        plannedAction = new BasicAttack(this);
+    public void SetPlannedAction()
+    {
+
     }
 }
