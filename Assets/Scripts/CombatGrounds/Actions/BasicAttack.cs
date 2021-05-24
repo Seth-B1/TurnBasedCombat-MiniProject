@@ -23,14 +23,14 @@ public class BasicAttack : Action
     {
         int totalDamage = 0;
 
-        totalDamage += unit.strength + unit.weapon.damage;
+        totalDamage += unit.strength;// + unit.weapon.damage;
 
         //play unit attack anim
         //Wait 0.5 seconds
         //player target damaged anim
         //Calculate random miss chance
 
-        unit.target.health -= totalDamage;
+        //unit.target.health -= totalDamage;
         //
         Debug.Log(unit.unitName + " attacks for damage: " + totalDamage);
         

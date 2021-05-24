@@ -64,10 +64,7 @@ public class BattleHandler : MonoBehaviour
             playerUnit.plannedAction.Execute();
         }
     }
-    public void NextPlayerAction()
-    {
-        
-    }
+
 #endregion
 
 
