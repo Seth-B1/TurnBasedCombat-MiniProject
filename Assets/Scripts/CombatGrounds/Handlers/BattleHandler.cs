@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+
+namespace TBCMiniProject.BattleHandler
+{
+    
 public class BattleHandler : MonoBehaviour
 {
 #region Fields and Properties
@@ -14,67 +18,36 @@ public class BattleHandler : MonoBehaviour
     public List<PlayerUnit> playerActionQueue;
     public InputHandler inputHandler;
     //
-    //
+    //States
+    public State currentState;
 #endregion    
     private void Start() 
     {
         inputHandler = GetComponent<InputHandler>();
-        inputHandler.onCurrentUnitActionHasBeenChosen += AddPlannedActionToPlayerUnit;
-        BeginPlayerTurn();
-    }
-
-#region Player Turn Functionality
-    void BeginPlayerTurn()
-    {
-        //CheckIfAllPlayersDead()
-        StartCoroutine(WaitUntilPlayerUnitActionInputAdded());
         
-
+        
+        currentState = new BeginBattle(this);
+        StartCoroutine(currentState.Enter());
     }
-    IEnumerator WaitUntilPlayerUnitActionInputAdded()
+
+#region State Handling (Change to Class?)
+
+    public void ChangeState(State newState)
     {
-        Debug.Log("WaitUntilPlayerUnitActionInputAdded");
-        foreach (Unit playerUnit in playerTeam)
-        {
-            if (!playerUnit.isDead)
-            {
-                ChangeCurrentPlayerUnit(playerUnit);
-                while (currentPlayerUnit.plannedAction == null)
-                {
-                    yield return null;
-                }
-                playerActionQueue.Add(currentPlayerUnit);
-                continue;
-            }
-            continue;
-        }
-        ExecutePlayerActionQueue();
+        StartCoroutine(currentState.Exit());
+        
+        currentState = newState;
+        StartCoroutine(currentState.Enter());
     }
 
-
-
-    public void AddPlannedActionToPlayerUnit(object sender, System.EventArgs e)
+    public void NextStepInState()
     {
-        currentPlayerUnit.plannedAction = new BasicAttack(currentPlayerUnit);
+        Debug.Log("Next Step in state");
+        StartCoroutine(currentState.Main());
     }
-    public void ExecutePlayerActionQueue()
-    {
-        Debug.Log("All Units added an action, executing now");
-        //OrganizeWhoExecutesFirstBySpeed();
-        foreach (PlayerUnit playerUnit in playerActionQueue)
-        {
-            playerUnit.plannedAction.Execute();
-        }
-    }
-
+    
 #endregion
 
 
-#region Explanitory Variables (Player Turn)
-    private void ChangeCurrentPlayerUnit(Unit playerUnit)
-    {
-        currentPlayerUnit = (PlayerUnit)playerUnit;
-        inputHandler.currentPlayerUnit = currentPlayerUnit;
-    }
-#endregion
+}
 }
