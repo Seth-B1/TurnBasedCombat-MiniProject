@@ -12,7 +12,7 @@ public class PlayerTurn : State
     public override IEnumerator Enter()
     {
         Debug.Log("Entering Player Turn");
-        battleHandler.inputHandler.onCurrentUnitActionHasBeenChosen += AddPlannedActionToPlayerUnit;
+        battleHandler.inputHandler.onCurrentUnitActionHasBeenChosen += AssignPlannedActionToPlayerUnit;
         
         yield return null;
         battleHandler.NextStepInState();
@@ -44,13 +44,22 @@ public class PlayerTurn : State
             }
             continue;
         }
-        ExecutePlayerActionQueue();
+        yield return ExecutePlayerActionQueue();
     }
-    public void AddPlannedActionToPlayerUnit(object sender, System.EventArgs e)
+    public void AssignPlannedActionToPlayerUnit(object sender, int _action)
     {
-        battleHandler.currentPlayerUnit.plannedAction = new BasicAttack(battleHandler.currentPlayerUnit);
+        switch (_action)
+        {
+            case 1:
+                battleHandler.currentPlayerUnit.plannedAction = new BasicAttack(battleHandler.currentPlayerUnit);
+                break;
+            
+            default:
+                break;
+        }
+        
     }
-    public void ExecutePlayerActionQueue()
+    public IEnumerator ExecutePlayerActionQueue()
     {
         //This method needs a coroutine as it needs to wait for each player action to play through
         Debug.Log("All Units added an action, executing now");
@@ -58,7 +67,13 @@ public class PlayerTurn : State
         foreach (PlayerUnit playerUnit in battleHandler.playerActionQueue)
         {
             playerUnit.plannedAction.Execute();
+            while (playerUnit.isExecutingAction)
+            {
+                yield return null;
+            }
         }
+
+        yield return Exit();
     }
 
 
@@ -67,7 +82,10 @@ public class PlayerTurn : State
 #region Exit  
     public override IEnumerator Exit()
     {
-        return base.Exit();
+        Debug.Log("Player turn ended");
+        battleHandler.inputHandler.onCurrentUnitActionHasBeenChosen -= AssignPlannedActionToPlayerUnit;
+        //return BattleHandler.BeginEnemyTurn()?
+        return null;
     }
 #endregion
 

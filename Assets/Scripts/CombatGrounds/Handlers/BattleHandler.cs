@@ -23,6 +23,7 @@ public class BattleHandler : MonoBehaviour
 #endregion    
     private void Start() 
     {
+        
         inputHandler = GetComponent<InputHandler>();
         
         

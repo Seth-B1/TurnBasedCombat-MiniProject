@@ -10,21 +10,24 @@ public class BasicAttack : Action
 
     public override void Execute()
     {
+        unit.isExecutingAction = true;
         
-        //unit.movement.FaceTarget();
+        unit.movementHandler.FaceTarget();
+        unit.movementHandler.MoveToTarget(BasicAttackTarget());
         //unit.movement.MoveToTarget_Melee();
-        BasicAttackTarget();
+        
         
     }
 
     
     
-    void BasicAttackTarget()
+    public IEnumerator BasicAttackTarget()
     {
         int totalDamage = 0;
 
         totalDamage += unit.strength;// + unit.weapon.damage;
 
+        unit.anim.SetTrigger("Left Punch Attack");
         //play unit attack anim
         //Wait 0.5 seconds
         //player target damaged anim
@@ -33,7 +36,9 @@ public class BasicAttack : Action
         //unit.target.health -= totalDamage;
         //
         Debug.Log(unit.unitName + " attacks for damage: " + totalDamage);
+        yield return new WaitForSeconds(0.5f);
         
+        unit.movementHandler.ReturnToStartPosition();
     }
     
 
