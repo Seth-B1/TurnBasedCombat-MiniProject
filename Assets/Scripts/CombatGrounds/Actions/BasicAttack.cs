@@ -13,7 +13,7 @@ public class BasicAttack : Action
         unit.isExecutingAction = true;
         
         unit.movementHandler.FaceTarget();
-        unit.movementHandler.MoveToTarget(BasicAttackTarget());
+        unit.movementHandler.MoveToTargetThenPerformAction(BasicAttackTarget());
         //unit.movement.MoveToTarget_Melee();
         
         

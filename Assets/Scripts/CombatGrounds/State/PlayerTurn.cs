@@ -24,17 +24,17 @@ public class PlayerTurn : State
     {
         Debug.Log("WaitUntilPlayerUnitActionInputAdded");
 
-        yield return WaitUntilPlayerUnitActionInputAdded(); 
+        yield return WaitUntil_AllPlayerUnitActionInputAdded(); 
     }
 
 
-    public IEnumerator WaitUntilPlayerUnitActionInputAdded()
+    public IEnumerator WaitUntil_AllPlayerUnitActionInputAdded()
     {
-        foreach (Unit playerUnit in battleHandler.playerTeam)
+        foreach (Unit activePlayerUnit in battleHandler.playerTeam)
         {
-            if (!playerUnit.isDead)
+            if (!activePlayerUnit.isDead)
             {
-                ChangeCurrentPlayerUnit(playerUnit);
+                ChangeCurrentPlayerUnit(activePlayerUnit);
                 while (battleHandler.currentPlayerUnit.plannedAction == null)
                 {
                     yield return null;
@@ -44,7 +44,7 @@ public class PlayerTurn : State
             }
             continue;
         }
-        yield return ExecutePlayerActionQueue();
+        yield return ExecuteAllPlayerActionQueue();
     }
     public void AssignPlannedActionToPlayerUnit(object sender, int _action)
     {
@@ -59,7 +59,7 @@ public class PlayerTurn : State
         }
         
     }
-    public IEnumerator ExecutePlayerActionQueue()
+    public IEnumerator ExecuteAllPlayerActionQueue()
     {
         //This method needs a coroutine as it needs to wait for each player action to play through
         Debug.Log("All Units added an action, executing now");

@@ -5,11 +5,12 @@ using UnityEngine;
 public class MovementHandler: MonoBehaviour
 {
     public Vector3 startPosition;
+    public Vector3 startRotation;
     Unit unit;
     private void Start() {
         this.unit = GetComponent<Unit>();
         this.startPosition = unit.transform.position;
-    
+        this.startRotation = unit.transform.rotation.eulerAngles;
     }
 
     public void StopAllGoToIdle()
@@ -40,7 +41,8 @@ public class MovementHandler: MonoBehaviour
         }
         private IEnumerator ReturnToStartPosition_Coroutine()
         {
-            Debug.Log("returning to start position");
+            unit.agent.isStopped = false;
+            Debug.Log($"returning to start position: {startPosition}");
             unit.agent.SetDestination(startPosition);
             while (unit.agent.pathPending)
                 yield return null;
@@ -48,12 +50,16 @@ public class MovementHandler: MonoBehaviour
             unit.anim.SetBool("Run", true);
             
             Debug.Log(unit.agent.remainingDistance);
-            while (unit.agent.remainingDistance >= 2f)
+            while (unit.agent.remainingDistance >= 0.3f)
+            {
+                Debug.Log(unit.agent.remainingDistance);
                 yield return null;
-        
+            }
             unit.anim.SetBool("Run",false);
+            unit.transform.position = startPosition;
+            unit.transform.rotation = new Quaternion(startRotation.x, startRotation.y, startRotation.z, 1f);
             unit.agent.isStopped = true;
-            FaceForward();
+            unit.isExecutingAction = false;
         }
 
         private IEnumerator MoveToTarget_Coroutine(IEnumerator nextAction)
