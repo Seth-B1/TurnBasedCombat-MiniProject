@@ -31,15 +31,15 @@ public class MovementHandler: MonoBehaviour
         unit.transform.position = new Vector3 (unit.transform.position.x, 0, unit.transform.position.z);
     }
 
-        public void MoveToTarget(IEnumerator nextAction)
+        public void MoveToTarget()
         {
-            StartCoroutine(MoveToTarget_Coroutine(nextAction));
+            StartCoroutine(MoveToTarget_Coroutine());
         }
         public void ReturnToStartPosition()
         {
             StartCoroutine(ReturnToStartPosition_Coroutine());
         }
-        private IEnumerator ReturnToStartPosition_Coroutine()
+        public IEnumerator ReturnToStartPosition_Coroutine()
         {
             unit.agent.isStopped = false;
             Debug.Log($"returning to start position: {startPosition}");
@@ -62,7 +62,7 @@ public class MovementHandler: MonoBehaviour
             unit.isExecutingAction = false;
         }
 
-        private IEnumerator MoveToTarget_Coroutine(IEnumerator nextAction)
+        public IEnumerator MoveToTarget_Coroutine()
     {
         //Is spear
         //Is 2HS
@@ -86,7 +86,7 @@ public class MovementHandler: MonoBehaviour
         unit.anim.SetBool("Run",false);
         unit.agent.isStopped = true;
 
-        yield return nextAction;
+        yield return null;
         
     }
     

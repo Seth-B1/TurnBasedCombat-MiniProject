@@ -39,14 +39,7 @@ public class BattleHandler : MonoBehaviour
         
         currentState = newState;
         StartCoroutine(currentState.Enter());
-    }
-
-    public void NextStepInState()
-    {
-        Debug.Log("Next Step in state");
-        StartCoroutine(currentState.Main());
-    }
-    
+    }    
 #endregion
 
 

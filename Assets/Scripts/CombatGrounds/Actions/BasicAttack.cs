@@ -12,10 +12,10 @@ public class BasicAttack : Action
     {
         unit.isExecutingAction = true;
         
-        unit.movementHandler.FaceTarget();
-        unit.movementHandler.MoveToTargetThenPerformAction(BasicAttackTarget());
-        //unit.movement.MoveToTarget_Melee();
+        //unit.movementHandler.FaceTarget();
         
+        //unit.movement.MoveToTarget_Melee();
+        unit.StartCoroutine(BasicAttackTarget());
         
     }
 
@@ -23,6 +23,8 @@ public class BasicAttack : Action
     
     public IEnumerator BasicAttackTarget()
     {
+        yield return unit.movementHandler.MoveToTarget_Coroutine();
+
         int totalDamage = 0;
 
         totalDamage += unit.strength;// + unit.weapon.damage;
@@ -36,8 +38,7 @@ public class BasicAttack : Action
         //unit.target.health -= totalDamage;
         //
         Debug.Log(unit.unitName + " attacks for damage: " + totalDamage);
-        yield return new WaitForSeconds(0.5f);
-        
+        yield return new WaitForSeconds(1f);
         unit.movementHandler.ReturnToStartPosition();
     }
     

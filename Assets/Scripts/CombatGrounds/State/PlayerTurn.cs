@@ -14,8 +14,7 @@ public class PlayerTurn : State
         Debug.Log("Entering Player Turn");
         battleHandler.inputHandler.onCurrentUnitActionHasBeenChosen += AssignPlannedActionToPlayerUnit;
         
-        yield return null;
-        battleHandler.NextStepInState();
+        yield return Main();
     }
 #endregion
 
@@ -61,8 +60,6 @@ public class PlayerTurn : State
     }
     public IEnumerator ExecuteAllPlayerActionQueue()
     {
-        //This method needs a coroutine as it needs to wait for each player action to play through
-        Debug.Log("All Units added an action, executing now");
         //OrganizeWhoExecutesFirstBySpeed();
         foreach (PlayerUnit playerUnit in battleHandler.playerActionQueue)
         {
@@ -84,8 +81,11 @@ public class PlayerTurn : State
     {
         Debug.Log("Player turn ended");
         battleHandler.inputHandler.onCurrentUnitActionHasBeenChosen -= AssignPlannedActionToPlayerUnit;
-        //return BattleHandler.BeginEnemyTurn()?
+        
+        battleHandler.ChangeState(new EnemyTurn(battleHandler));
         return null;
+
+
     }
 #endregion
 
