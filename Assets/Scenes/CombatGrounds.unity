@@ -585,7 +585,6 @@ MonoBehaviour:
   anim: {fileID: 0}
   agent: {fileID: 0}
   isExecutingAction: 0
-  weapon: {fileID: 0}
   health: 0
   strength: 21
   speed: 0
@@ -604,6 +603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
+  startRotation: {x: 0, y: 0, z: 0}
 --- !u!195 &761909539
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -671,11 +671,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPlayerUnit: {fileID: 761909537}
-  enemyTeam: []
+  enemyTeam:
+  - {fileID: 1240676046}
   playerTeam:
   - {fileID: 761909537}
   - {fileID: 1976137427}
   playerActionQueue: []
+  enemyActionQueue: []
   inputHandler: {fileID: 0}
 --- !u!114 &881724548
 MonoBehaviour:
@@ -844,6 +846,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 160358, guid: 641d7cfa7d672e6418d4df0c884ab90f, type: 3}
   m_PrefabInstance: {fileID: 2035671334}
   m_PrefabAsset: {fileID: 0}
+--- !u!195 &1240676044
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240676043}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &1240676046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -861,7 +885,6 @@ MonoBehaviour:
   anim: {fileID: 0}
   agent: {fileID: 0}
   isExecutingAction: 0
-  weapon: {fileID: 0}
   health: 0
   strength: 0
   speed: 0
@@ -880,6 +903,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
+  startRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &1456744063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,7 +1156,6 @@ MonoBehaviour:
   anim: {fileID: 0}
   agent: {fileID: 0}
   isExecutingAction: 0
-  weapon: {fileID: 0}
   health: 0
   strength: 17
   speed: 0
@@ -1173,6 +1196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: 0, y: 0, z: 0}
+  startRotation: {x: 0, y: 0, z: 0}
 --- !u!1001 &2035671334
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -10,4 +10,12 @@ public class InputHandler : MonoBehaviour
     {
         onCurrentUnitActionHasBeenChosen.Invoke(this, 1);
     }
+    public void Abilities_SetCurrentUnitAction()
+    {
+        onCurrentUnitActionHasBeenChosen.Invoke(this, 2);
+    }
+    public void Items_SetCurrentUnitAction()
+    {
+        onCurrentUnitActionHasBeenChosen.Invoke(this, 3);
+    }
 }

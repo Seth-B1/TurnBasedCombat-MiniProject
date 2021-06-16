@@ -42,17 +42,18 @@ public class MovementHandler: MonoBehaviour
         public IEnumerator ReturnToStartPosition_Coroutine()
         {
             unit.agent.isStopped = false;
-            Debug.Log($"returning to start position: {startPosition}");
+
             unit.agent.SetDestination(startPosition);
+
             while (unit.agent.pathPending)
                 yield return null;
 
             unit.anim.SetBool("Run", true);
             
-            Debug.Log(unit.agent.remainingDistance);
+
             while (unit.agent.remainingDistance >= 0.3f)
             {
-                Debug.Log(unit.agent.remainingDistance);
+                
                 yield return null;
             }
             unit.anim.SetBool("Run",false);
@@ -69,18 +70,20 @@ public class MovementHandler: MonoBehaviour
         //Is Fists
         //Is onehand
         //Is Ranged
-        
-        //if at destination stop
+        unit.agent.isStopped = false;
         unit.agent.SetDestination(unit.target.transform.position);
         
         while (unit.agent.pathPending)
+        {
             yield return null;
-
+        }
+    
         unit.anim.SetBool("Run",true);
-        Debug.Log(unit.agent.remainingDistance);
+     
 
         while (unit.agent.remainingDistance >= 2f)
         {
+            //Debug.Log(unit.agent.remainingDistance);
             yield return null;
         }
         unit.anim.SetBool("Run",false);

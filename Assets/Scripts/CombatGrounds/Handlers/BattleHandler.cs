@@ -16,6 +16,7 @@ public class BattleHandler : MonoBehaviour
 
     //Combat
     public List<PlayerUnit> playerActionQueue;
+    public List<EnemyUnit> enemyActionQueue;
     public InputHandler inputHandler;
     //
     //States
@@ -35,6 +36,11 @@ public class BattleHandler : MonoBehaviour
 
     public void ChangeState(State newState)
     {
+        StopAllCoroutines();
+
+        playerActionQueue.Clear();
+        enemyActionQueue.Clear();
+        
         StartCoroutine(currentState.Exit());
         
         currentState = newState;

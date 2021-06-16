@@ -11,12 +11,14 @@ public class BasicAttack : Action
     public override void Execute()
     {
         unit.isExecutingAction = true;
-        
-        //unit.movementHandler.FaceTarget();
-        
-        //unit.movement.MoveToTarget_Melee();
-        unit.StartCoroutine(BasicAttackTarget());
-        
+
+        if (!unit.target.isDead)
+        {
+            unit.StartCoroutine(BasicAttackTarget());
+        }
+        else
+            unit.isExecutingAction = false;
+       
     }
 
     
@@ -25,26 +27,38 @@ public class BasicAttack : Action
     {
         yield return unit.movementHandler.MoveToTarget_Coroutine();
 
-        int totalDamage = 0;
-
-        totalDamage += unit.strength;// + unit.weapon.damage;
-
         unit.anim.SetTrigger("Left Punch Attack");
         //play unit attack anim
         //Wait 0.5 seconds
         //player target damaged anim
         //Calculate random miss chance
 
-        //unit.target.health -= totalDamage;
+        
         //
-        Debug.Log(unit.unitName + " attacks for damage: " + totalDamage);
+        Debug.Log(unit.unitName + " attacks");
         yield return new WaitForSeconds(1f);
+        DamageTarget();
         unit.movementHandler.ReturnToStartPosition();
     }
-    
+
+    private void DamageTarget()
+    {
+        
+        int totalDamage = 0;
+
+        totalDamage += unit.strength;// + unit.weapon.damage;
+
+        unit.target.health -= totalDamage;
+        if (unit.target.health <= 0)
+        {
+            unit.target.Die();
+        }
+
+    }
 
 
-#region Test Methods
+
+    #region Test Methods
     public override void TestExecute()
     {
         Debug.Log($"{unit.unitName} executes basic attack");

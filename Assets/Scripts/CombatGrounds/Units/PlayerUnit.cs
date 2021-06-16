@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerUnit : Unit
 {
-    public Action plannedAction;
+    
 
     public void SetPlannedAction(Action _plannedAction)
     {
