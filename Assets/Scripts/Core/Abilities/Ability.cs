@@ -4,8 +4,9 @@ using UnityEngine;
 public class Ability : ScriptableObject 
 {
     public string abilityName;
+    public string animationName;
     public bool isHeal;
-    public bool isMelee;
+    public bool isClose;
     public bool isRanged;
     public bool isMultiTarget;
     public int baseHealValue;

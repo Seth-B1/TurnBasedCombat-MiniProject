@@ -4,18 +4,24 @@ using UnityEngine;
 public class InputHandler : MonoBehaviour
 {
     public Action newAction;
-    public Unit currentPlayerUnit;
-    public event System.EventHandler<int> onCurrentUnitActionHasBeenChosen;
-    public void BasicAttack_SetCurrentUnitAction()
+    public static System.Action onOpenAbilitiesMenu;
+    [SerializeField]
+    public static Unit currentPlayerUnit;
+    
+    public void BasicAttack_OnClick()
     {
-        onCurrentUnitActionHasBeenChosen.Invoke(this, 1);
+        //StartCoroutine(ChooseTarget());
+        currentPlayerUnit.plannedAction = new BasicAttack(InputHandler.currentPlayerUnit);
     }
-    public void Abilities_SetCurrentUnitAction()
+    public void Abilities_OnClick()
     {
-        onCurrentUnitActionHasBeenChosen.Invoke(this, 2);
+        onOpenAbilitiesMenu();
     }
-    public void Items_SetCurrentUnitAction()
+
+    public void Items_OnClick()
     {
-        onCurrentUnitActionHasBeenChosen.Invoke(this, 3);
     }
+
+
+
 }

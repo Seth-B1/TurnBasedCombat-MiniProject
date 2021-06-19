@@ -2,21 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class UIHandler : MonoBehaviour
 {
     public GameObject InfoPanel;
-    public InputHandler inputHandler;
+    public GameObject abilityButton;
 
     private void Start() 
     {
-        inputHandler = GetComponent<InputHandler>();
+        InputHandler.onOpenAbilitiesMenu += DisplayUnitAbilities;
+
+
     }
     public void DisplayUnitAbilities()
     {
-        foreach (Ability ability in inputHandler.currentPlayerUnit.knownAbilities)
-        {
+        InfoPanel.SetActive(true);
 
+        PopulateWindowWithAbilities();
+    }
+
+    private void PopulateWindowWithAbilities()
+    {
+        foreach (var ability in InputHandler.currentPlayerUnit.knownAbilities)
+        {
+            GameObject newbutton = Instantiate(abilityButton, parent: InfoPanel.transform);
+            //newbutton.GetComponent<>().text = ability.abilityName;
         }
     }
 }

@@ -13,9 +13,7 @@ public class PlayerTurn : State
 #region Enter
     public override IEnumerator Enter()
     {
-        Debug.Log("Entering Player Turn");
-        battleHandler.inputHandler.onCurrentUnitActionHasBeenChosen += AssignPlannedActionToPlayerUnit;
-        
+        Debug.Log("Entering Player Turn");        
         yield return Main();
     }
 #endregion
@@ -40,30 +38,14 @@ public class PlayerTurn : State
                 {
                     yield return null;
                 }
-                battleHandler.playerActionQueue.Add(battleHandler.currentPlayerUnit);
+                battleHandler.playerActionQueue.Add(InputHandler.currentPlayerUnit as PlayerUnit);
                 continue;
             }
             continue;
         }
         yield return ExecuteAllPlayerActionQueue();
     }
-    public void AssignPlannedActionToPlayerUnit(object sender, int _action)
-    {
-        switch (_action)
-        {
-            case 1:
-                battleHandler.currentPlayerUnit.plannedAction = new BasicAttack(battleHandler.currentPlayerUnit);
-                break;
 
-            case 2:
-                battleHandler.currentPlayerUnit.plannedAction = new CastAbility(battleHandler.currentPlayerUnit);
-                break;
-
-            default:
-                break;
-        }
-        
-    }
     public IEnumerator ExecuteAllPlayerActionQueue()
     {
         //OrganizeWhoExecutesFirstBySpeed();
@@ -102,7 +84,6 @@ public class PlayerTurn : State
     public override IEnumerator Exit()
     {
         Debug.Log("Player turn ended");
-        battleHandler.inputHandler.onCurrentUnitActionHasBeenChosen -= AssignPlannedActionToPlayerUnit;
         
         
         yield return null;
@@ -122,7 +103,7 @@ public class PlayerTurn : State
     {
         
         battleHandler.currentPlayerUnit = (PlayerUnit)playerUnit;
-        battleHandler.inputHandler.currentPlayerUnit = battleHandler.currentPlayerUnit;
+        InputHandler.currentPlayerUnit = battleHandler.currentPlayerUnit;
     }
 #endregion
 
