@@ -58,9 +58,8 @@ public class PlayerTurn : State
             }
             playerUnit.plannedAction = null;
             playerUnit.target = null;
+            ValidateVictoryConditions();
         }
-
-        ValidateVictoryConditions();
         yield return null;
     }
 
@@ -75,6 +74,7 @@ public class PlayerTurn : State
             }
         }
         Debug.Log("Enemy team has fallen you are victorious");
+        //BattleHandler.VictoryAchieved();
     }
 
 

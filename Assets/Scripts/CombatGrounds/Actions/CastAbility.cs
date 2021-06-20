@@ -14,6 +14,7 @@ public class CastAbility : Action
     public CastAbility(Unit _unit, Ability _ability) : base(_unit)
     {
         Ability = _ability;
+        unit.plannedAction = this;
     }
 
     public override void Execute()
@@ -32,6 +33,10 @@ public class CastAbility : Action
 
         unit.anim.SetTrigger(Ability.animationName);
 
-        unit.target.health -= Ability.baseDamageValue; 
+        unit.target.health -= Ability.baseDamageValue;
+
+        yield return new WaitForSeconds(1f);
+
+        unit.movementHandler.ReturnToStartPosition();
     }
 }

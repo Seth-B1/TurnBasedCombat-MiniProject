@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c958a2240b6cfd49a3745cbea929dd3, type: 3}
   m_Name: Heal
   m_EditorClassIdentifier: 
-  abilityName: 
+  abilityName: Heal
+  animationName: 
   isHeal: 0
-  isAttack: 0
+  isClose: 0
+  isRanged: 0
+  isMultiTarget: 0
   baseHealValue: 0
   baseDamageValue: 0

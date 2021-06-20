@@ -12,7 +12,7 @@ public abstract class Action
     
     public virtual void Execute()
     {
-        
+        unit.isExecutingAction = true;        
     }
     
 #region Testing Methods

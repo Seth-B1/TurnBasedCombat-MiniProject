@@ -10,14 +10,25 @@ public class UIHandler : MonoBehaviour
     private void Start() 
     {
         InputHandler.onOpenAbilitiesMenu += DisplayUnitAbilities;
-
+        AbilityButton.onCloseAbilitiesMenu += CloseUnitAbilities;
 
     }
     public void DisplayUnitAbilities()
     {
-        InfoPanel.SetActive(true);
+        if (InfoPanel.activeSelf == true)
+            return;
 
+
+        InfoPanel.SetActive(true);
         PopulateWindowWithAbilities();
+    }
+
+    public void CloseUnitAbilities()
+    {
+        foreach (Transform button in InfoPanel.transform)
+            Destroy(button.gameObject);      
+        
+        InfoPanel.SetActive(false);  
     }
 
     private void PopulateWindowWithAbilities()
@@ -25,7 +36,8 @@ public class UIHandler : MonoBehaviour
         foreach (var ability in InputHandler.currentPlayerUnit.knownAbilities)
         {
             GameObject newbutton = Instantiate(abilityButton, parent: InfoPanel.transform);
-            //newbutton.GetComponent<>().text = ability.abilityName;
+            newbutton.transform.GetChild(0).GetComponent<Text>().text = ability.abilityName;
+            newbutton.GetComponent<AbilityButton>().ability = ability;
         }
     }
 }
