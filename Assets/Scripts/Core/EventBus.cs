@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class EventBus : MonoBehaviour
 {
     public static EventBus Instance;
-    private Dictionary<string, UnityEvent> m_EventDictionary;
+    private Dictionary<string, UnityEvent> eventDictionary;
 
     void Awake()
     {
@@ -18,11 +18,11 @@ public class EventBus : MonoBehaviour
         Init();
     }
 
-    private void Init()
+      void Init()
     {
-        if (Instance.m_EventDictionary == null)
+        if (Instance.eventDictionary == null)
         {
-            Instance.m_EventDictionary = new Dictionary<string, UnityEvent>();
+            Instance.eventDictionary = new Dictionary<string, UnityEvent>();
         }
     }
 
@@ -30,7 +30,7 @@ public class EventBus : MonoBehaviour
     {
         UnityEvent thisEvent = null;
 
-        if (Instance.m_EventDictionary.TryGetValue(eventName, out thisEvent))
+        if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.AddListener(listener);
         }
@@ -39,9 +39,27 @@ public class EventBus : MonoBehaviour
         {
             thisEvent = new UnityEvent();
             thisEvent.AddListener(listener);
-            Instance.m_EventDictionary.Add(eventName, thisEvent);
+            Instance.eventDictionary.Add(eventName, thisEvent);
         }
     }
+    public static void StopListening(string eventName, UnityAction listener)
+    {
+        UnityEvent thisEvent = null;
+        if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent.RemoveListener(listener);
+        }
+    }
+
+    public static void TriggerEvent(string eventName)
+    {
+        UnityEvent thisEvent = null;
+        if (Instance.eventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent.Invoke();
+        }
+    }
+
 
     
 }

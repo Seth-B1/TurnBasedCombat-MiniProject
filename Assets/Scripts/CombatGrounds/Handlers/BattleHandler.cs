@@ -21,6 +21,7 @@ public class BattleHandler : MonoBehaviour
     //
     //States
     public State currentState;
+    public bool isBattleOver;
 #endregion    
     private void Start() 
     {

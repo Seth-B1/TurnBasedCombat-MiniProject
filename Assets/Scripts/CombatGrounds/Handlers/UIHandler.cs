@@ -6,12 +6,15 @@ public class UIHandler : MonoBehaviour
 {
     public GameObject InfoPanel;
     public GameObject abilityButton;
+    public GameObject actionButtons;
 
     private void Start() 
     {
         InputHandler.onOpenAbilitiesMenu += DisplayUnitAbilities;
         AbilityButton.onCloseAbilitiesMenu += CloseUnitAbilities;
 
+        EventBus.StartListening("HideAllActionButtons", HideAllActionButtons);
+        EventBus.StartListening("ShowAllActionButtons", ShowAllActionButtons);
     }
     public void DisplayUnitAbilities()
     {
@@ -40,4 +43,17 @@ public class UIHandler : MonoBehaviour
             newbutton.GetComponent<AbilityButton>().ability = ability;
         }
     }
+
+
+    public void HideAllActionButtons()
+    {
+        actionButtons.SetActive(false);
+    }
+    public void ShowAllActionButtons()
+    {
+        actionButtons.SetActive(true);
+    }
+
+
+
 }

@@ -6,7 +6,6 @@ public class InputHandler : MonoBehaviour
 {
     public Action newAction;
     public static System.Action onOpenAbilitiesMenu;
-    [SerializeField]
     public static Unit currentPlayerUnit;
     public Raycast Raycast;
 
@@ -19,7 +18,7 @@ public class InputHandler : MonoBehaviour
     
     public void BasicAttack_OnClick()
     {
-        StartCoroutine(ChooseEnemyTarget(new BasicAttack(InputHandler.currentPlayerUnit)));
+        ChooseEnemyTarget(new BasicAttack(InputHandler.currentPlayerUnit));
         
     }
     public void Abilities_OnClick()
@@ -32,7 +31,11 @@ public class InputHandler : MonoBehaviour
     }
 
 
-    public IEnumerator ChooseEnemyTarget(Action newAction)
+    public void ChooseEnemyTarget(Action newAction)
+    {
+        StartCoroutine(ChooseEnemyTarget_Coroutine(newAction));
+    }
+    public IEnumerator ChooseEnemyTarget_Coroutine(Action newAction)
     {
         Debug.Log("Choose a Target");
         
@@ -42,9 +45,7 @@ public class InputHandler : MonoBehaviour
 
             if (Input.GetMouseButtonDown(1))
             {
-                Debug.Log("currentPlayerUnit is " + currentPlayerUnit.name);
                 currentPlayerUnit.target = Raycast.GetHoveredEnemyUnit() as Unit;
-                Debug.Log("Target is " + currentPlayerUnit.target.name);
             }
             
             yield return null;
@@ -54,9 +55,6 @@ public class InputHandler : MonoBehaviour
     }
 
 
-    public void HideAllActionButtons()
-    {
 
-    }
 
 }

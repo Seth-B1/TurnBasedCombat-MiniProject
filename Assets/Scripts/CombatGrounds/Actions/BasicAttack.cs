@@ -25,6 +25,8 @@ public class BasicAttack : Action
     
     public IEnumerator BasicAttackTarget()
     {
+        
+
         yield return unit.movementHandler.MoveToTarget_Coroutine();
 
         unit.anim.SetTrigger("Left Punch Attack");
@@ -39,6 +41,7 @@ public class BasicAttack : Action
         yield return new WaitForSeconds(1f);
         DamageTarget();
         unit.movementHandler.ReturnToStartPosition();
+        
     }
 
     private void DamageTarget()

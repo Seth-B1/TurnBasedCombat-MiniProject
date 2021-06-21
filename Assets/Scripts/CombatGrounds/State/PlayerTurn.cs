@@ -29,12 +29,13 @@ public class PlayerTurn : State
 
     public IEnumerator GetAllPlayerUnitActionInputs()
     {
+        EventBus.TriggerEvent("ShowAllActionButtons");
         foreach (Unit activePlayerUnit in battleHandler.playerTeam)
         {
             if (!activePlayerUnit.isDead)
             {
                 ChangeCurrentPlayerUnit(activePlayerUnit);
-                while (battleHandler.currentPlayerUnit.plannedAction == null)
+                while (battleHandler.currentPlayerUnit.isReady == false)
                 {
                     yield return null;
                 }
@@ -48,6 +49,7 @@ public class PlayerTurn : State
 
     public IEnumerator ExecuteAllPlayerActionQueue()
     {
+        EventBus.TriggerEvent("HideAllActionButtons");
         //OrganizeWhoExecutesFirstBySpeed();
         foreach (PlayerUnit playerUnit in battleHandler.playerActionQueue)
         {
@@ -73,8 +75,12 @@ public class PlayerTurn : State
                 break;
             }
         }
-        Debug.Log("Enemy team has fallen you are victorious");
-        //BattleHandler.VictoryAchieved();
+        if (!battleHandler.isBattleOver)
+        {
+            battleHandler.isBattleOver = true;
+            //BattleHandler.VictoryAchieved();
+            Debug.Log("Enemy team has fallen you are victorious");
+        }
     }
 
 
