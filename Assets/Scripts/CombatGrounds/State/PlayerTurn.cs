@@ -59,9 +59,11 @@ public class PlayerTurn : State
                 yield return null;
             }
             playerUnit.plannedAction = null;
+            playerUnit.isReady = false;
             playerUnit.target = null;
-            ValidateVictoryConditions();
+            
         }
+        ValidateVictoryConditions();
         yield return null;
     }
 
@@ -74,13 +76,14 @@ public class PlayerTurn : State
                 battleHandler.ChangeState(new EnemyTurn(battleHandler));
                 break;
             }
-        }
-        if (!battleHandler.isBattleOver)
-        {
+            else if (!battleHandler.isBattleOver)
+            {
             battleHandler.isBattleOver = true;
             //BattleHandler.VictoryAchieved();
             Debug.Log("Enemy team has fallen you are victorious");
+            }
         }
+
     }
 
 

@@ -45,6 +45,9 @@ public class EnemyTurn : State
             {
                 yield return null;
             }
+            
+            enemy.plannedAction = null;
+            enemy.target = null;
         }
         //If players are still alive
         battleHandler.ChangeState(new PlayerTurn(battleHandler));
@@ -57,7 +60,7 @@ public class EnemyTurn : State
         //Algorithim to determine who is the enemies target
         //For now just use math random
 
-        int random = UnityEngine.Random.Range(1, battleHandler.playerTeam.Count);
+        int random = UnityEngine.Random.Range(0, battleHandler.playerTeam.Count);
         _enemy.target = battleHandler.playerTeam[random];
     }
     private void DetermineEnemyAction(EnemyUnit _enemy)

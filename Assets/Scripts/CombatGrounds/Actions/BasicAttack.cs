@@ -20,6 +20,10 @@ public class BasicAttack : Action
             unit.isExecutingAction = false;
        
     }
+    public override void EndOfAction()
+    {
+        base.EndOfAction();
+    }
 
     
     
@@ -41,6 +45,8 @@ public class BasicAttack : Action
         yield return new WaitForSeconds(1f);
         DamageTarget();
         unit.movementHandler.ReturnToStartPosition();
+        
+        
         
     }
 

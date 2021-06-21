@@ -6,7 +6,7 @@ public class InputHandler : MonoBehaviour
 {
     public Action newAction;
     public static System.Action onOpenAbilitiesMenu;
-    public static Unit currentPlayerUnit;
+    public static PlayerUnit currentPlayerUnit;
     public Raycast Raycast;
 
     private void Start() 
@@ -41,6 +41,7 @@ public class InputHandler : MonoBehaviour
         
         while (currentPlayerUnit.target == null)
         {
+            //If go back is clicked, break
             Raycast.HoverTarget();
 
             if (Input.GetMouseButtonDown(1))
@@ -52,6 +53,7 @@ public class InputHandler : MonoBehaviour
         }
 
         currentPlayerUnit.plannedAction = newAction;
+        currentPlayerUnit.isReady = true;
     }
 
 

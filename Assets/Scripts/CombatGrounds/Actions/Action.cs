@@ -14,6 +14,18 @@ public abstract class Action
     {
         unit.isExecutingAction = true;        
     }
+
+    public virtual void EndOfAction()
+    {
+        unit.plannedAction = null;
+        unit.target = null;
+
+        if (unit.TryGetComponent<PlayerUnit>(out PlayerUnit playerUnit))
+        {
+            playerUnit.isReady = false;
+        }
+    }
+
     
 #region Testing Methods
     public virtual void TestExecute()
